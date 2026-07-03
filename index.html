@@ -57,6 +57,51 @@
         </div>
     </div>
 
+    <!-- Floating Love Letter -->
+    <div id="floating-letter" onclick="showFirstLetter()" 
+         class="hidden fixed bottom-10 right-10 bg-white p-6 rounded-2xl shadow-2xl border-4 border-pink-400 cursor-pointer floating-letter z-50">
+        <div class="text-5xl mb-2">💌</div>
+        <p class="title-font text-pink-600 text-xl text-center">Open My Letter</p>
+    </div>
+
+    <!-- First Letter Modal -->
+    <div id="letter1-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white max-w-lg w-full mx-4 p-10 rounded-3xl relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-3xl text-pink-400 hover:text-pink-600">×</button>
+            <h2 class="title-font text-5xl text-pink-600 mb-8 text-center">My Heart's Message</h2>
+            <div class="text-lg leading-relaxed text-gray-700">
+                We met as strangers, different city, different person, different field but it was destiny that made us together.<br><br>
+                Talking for 3 yrs to celebrating your special day together it still feels dreamy babe.<br><br>
+                I love you forever and I will just love you more and more each passing days.<br>
+                You are very precious to me baby.<br>
+                Happy Birthday Baby ,I wish i was there to witness your hapinesss
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Letter Modal -->
+    <div id="letter2-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white max-w-lg w-full mx-4 p-10 rounded-3xl relative">
+            <button onclick="closeModals()" class="absolute top-4 right-4 text-3xl text-pink-400 hover:text-pink-600">×</button>
+            <h2 class="title-font text-5xl text-pink-600 mb-8 text-center">Auney Xu Lina Timilai</h2>
+            <div class="text-lg leading-relaxed text-gray-700 space-y-6">
+                <p>Auney xu lina timilai aba ko 2 barsa ma,<br>
+                Huney xu timro behula banauney chu timilai afno behuli.<br>
+                Yaad gar huney xa hamro tyo pal, garni xaina kei xal.</p>
+                
+                <p>Ranjana xara ta Abinash xa vanni nai huney xa sada,<br>
+                Timi nai ma xu mah fida.<br>
+                Timro haat samai ma sangai hidchu, timro maya ma har pal bitauchu.</p>
+                
+                <p>Yo jivan timi sangai bitawney chu,<br>
+                Timilai sada khusi rakhney chu.<br>
+                Timi mero sapana, timi mero duniya,<br>
+                Timi nai hau mero sara sansar</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div id="main-content" style="display: none;">
 
@@ -128,11 +173,8 @@
         <section class="py-20 bg-pink-50">
             <div class="max-w-6xl mx-auto px-6">
                 <h2 class="text-center title-font text-6xl text-pink-600 mb-12">Our Beautiful Memories</h2>
-                
                 <div id="gallery" class="relative overflow-hidden rounded-3xl">
-                    <div id="slides" class="flex transition-transform duration-700 ease-in-out">
-                        <!-- JS will fill -->
-                    </div>
+                    <div id="slides" class="flex transition-transform duration-700 ease-in-out"></div>
                 </div>
             </div>
         </section>
@@ -168,6 +210,7 @@
         function startEverything() {
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
+            document.getElementById('floating-letter').classList.remove('hidden');
 
             if (!audio) {
                 audio = new Audio('nastelbom-happy-birthday-469282.mp3');
@@ -194,13 +237,11 @@
 
         function initGallery() {
             const images = [
-                'image1.jpeg', 'image2.jpeg', 'image3.jpeg', 'image1.jpeg', // image4 replaced with image1
+                'image1.jpeg', 'image2.jpeg', 'image3.jpeg', 'image1.jpeg',
                 'image5.jpeg', 'image6.jpeg', 'image7.jpeg', 'image8.jpeg'
             ];
-            
             const slidesContainer = document.getElementById('slides');
             slidesContainer.innerHTML = '';
-
             for (let i = 0; i < images.length; i += 2) {
                 const slide = document.createElement('div');
                 slide.className = 'flex-shrink-0 w-full grid grid-cols-2 gap-6 px-4';
@@ -214,11 +255,32 @@
                 `;
                 slidesContainer.appendChild(slide);
             }
-
             setInterval(() => {
                 currentSlide = (currentSlide + 1) % Math.ceil(images.length / 2);
                 slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
             }, 4500);
+        }
+
+        function showFirstLetter() {
+            document.getElementById('floating-letter').classList.add('hidden');
+            document.getElementById('letter1-modal').classList.remove('hidden');
+        }
+
+        function cutCake() {
+            const cake = document.getElementById('cake');
+            cake.style.transform = 'scale(1.25)';
+            cake.textContent = '🎂❤️😍';
+            heartAndFlowerShower();
+            setTimeout(() => {
+                document.getElementById('letter2-modal').classList.remove('hidden');
+                cake.style.transform = 'scale(1)';
+                cake.textContent = '🎂';
+            }, 800);
+        }
+
+        function closeModals() {
+            document.getElementById('letter1-modal').classList.add('hidden');
+            document.getElementById('letter2-modal').classList.add('hidden');
         }
 
         function heartAndFlowerShower() {
@@ -241,18 +303,6 @@
                     setTimeout(() => item.remove(), 5500);
                 }, i * 10);
             }
-        }
-
-        function cutCake() {
-            const cake = document.getElementById('cake');
-            cake.style.transform = 'scale(1.25)';
-            cake.textContent = '🎂❤️😍';
-            heartAndFlowerShower();
-            setTimeout(() => {
-                alert("🎉 Happy Birthday Ranjana! 🎂\nI Love You So Much ❤️ \n I Promise to be with you forever Ranjana💖💖💖");
-                cake.style.transform = 'scale(1)';
-                cake.textContent = '🎂';
-            }, 1000);
         }
     </script>
 </body>
